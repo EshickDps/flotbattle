@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <cstring>
 #include "Windows.h"
 
 #pragma comment(lib, "winmm.lib")
@@ -290,7 +291,7 @@ void googleCord( char Field[FIELD_SIZE][FIELD_SIZE]) {
 
 }
 
-//блок считывания поля бота и прернос данных на доп-поле
+//блок считывания поля бота и игроков и прернос данных на доп-поле
 void goToDop(char dopField[FIELD_SIZE][FIELD_SIZE], char botField[FIELD_SIZE][FIELD_SIZE]) {
     for (int i = 0; i < FIELD_SIZE; i++)
    {
@@ -311,11 +312,14 @@ void goToDop(char dopField[FIELD_SIZE][FIELD_SIZE], char botField[FIELD_SIZE][FI
        }
    }
   }
+
+
 // Функция для получения случайных координат выстрела от бота
 void getBotShotCoordinates(int& row, int& col) {
     row = rand() % FIELD_SIZE;
     col = rand() % FIELD_SIZE;
 }
+
 int main() {
     
     
@@ -333,6 +337,9 @@ int main() {
     char playerField[FIELD_SIZE][FIELD_SIZE];
     char botField[FIELD_SIZE][FIELD_SIZE];
     char dopField[FIELD_SIZE][FIELD_SIZE];
+    // Поля для режима без бота
+    char plOneF[FIELD_SIZE][FIELD_SIZE];
+    char plTwoF[FIELD_SIZE][FIELD_SIZE];
     
     for (int i = 0; i < FIELD_SIZE; i++) {
         for (int j = 0; j < FIELD_SIZE; j++) {
@@ -342,15 +349,8 @@ int main() {
     }
     // Размещение кораблей (простейший вариант - случайное размещение)
 
-    placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
-    placeShip(botField, 2, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
-    placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
-    placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
-    placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
-    placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
-    placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
-    placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
 
+    
     //блок создания до-поля
     for (int i = 0; i < FIELD_SIZE; i++)
     {
@@ -387,6 +387,7 @@ int main() {
 
     // Игра
     bool debugOrNot;
+    char botOrH;
     int playerShots = 0;
     int its = 0;
     int botShots = 0;
@@ -395,6 +396,9 @@ int main() {
     bool razv=false;
     cout << "debug or not(1)(0): ";
     cin >> debugOrNot;
+
+    cout << "game with bot (pve) or with friend (pvp): ";
+    cin >> botOrH;
     
 
     if (debugOrNot==false)
@@ -407,6 +411,30 @@ int main() {
         loading();
         Sleep(250);
         name();
+
+        if (botOrH == 'b') {
+            placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(botField, 2, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
+            placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
+            placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+        }
+
+        if (botOrH=='p')
+        {
+            placeShip(plOneF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(plOneF, 2, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
+            placeShip(plOneF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
+            placeShip(plOneF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
+            placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточныйplOneF
+        }
+
     }
     
     if (debugOrNot==true)
@@ -414,54 +442,137 @@ int main() {
         its = 15;
     }
 
-    while (playerShipsSunk < 16 && botShipsSunk < 16) {
-        // Ход игрока
-        cout << "## you it! ##" << endl;
-        its++;
-        Sleep(1000);
-        cout << endl;
-        if (its>=15)
-        {
-            cout << "you can to search cords (1-yes) (0-wait): ";
-            cin >> razv;
+    if (botOrH=='b')
+    {
+        while (playerShipsSunk < 16 && botShipsSunk < 16) {
+            // Ход игрока
+            cout << "## you it! ##" << endl;
+            its++;
+            Sleep(1000);
+            cout << endl;
+            if (its >= 15)
+            {
+                cout << "you can to search cords (1-yes) (0-wait): ";
+                cin >> razv;
 
 
-        }
-        if (razv==true)
-        {
-            razv = false;
-            its = 0;
-            googleCord(botField);
-        }
-        
-        printField(dopField);
-        int row, col;
-        if (debugOrNot==true)
-        {
-            printField(botField);
+            }
+            if (razv == true)
+            {
+                razv = false;
+                its = 0;
+                googleCord(botField);
+            }
+
+            printField(dopField);
+            int row, col;
+            if (debugOrNot == true)
+            {
+                printField(botField);
+            }
+
+            //printField(botField);
+            getShotCoordinates(row, col);
+            if (handleShot(botField, row, col)) {
+                playerShipsSunk++;
+            }
+            if (debugOrNot == false)
+            {
+                goToDop(dopField, botField);
+            }
+            playerShots++;
+            // Ход бота
+            cout << "## bot it! ##" << endl;
+            int botRow, botCol;
+            getBotShotCoordinates(botRow, botCol);
+            if (handleShot(playerField, botRow, botCol)) {
+                botShipsSunk++;
+            }
+            botShots++;
+            cout << endl;
+            Sleep(1000);
+            printField(playerField);
         }
 
-        //printField(botField);
-        getShotCoordinates(row, col);
-        if (handleShot(botField, row, col)) {
-            playerShipsSunk++;
+    }
+    
+
+    if (botOrH=='p') {
+        while (playerShipsSunk < 16 && botShipsSunk < 16) {
+            // Ход игрока 1
+            cout << "## pl1 it! ##" << endl;
+
+            Sleep(1000);
+            cout << endl;
+            if (its >= 15)
+            {
+                cout << "you can to search cords (1-yes) (0-wait): ";
+                cin >> razv;
+
+
+            }
+            if (razv == true)
+            {
+                razv = false;
+                its = 0;
+                googleCord(plTwoF);
+            }
+
+            printField(dopField);
+            int row, col;
+            if (debugOrNot == true)
+            {
+                printField(plTwoF);
+            }
+
+            //printField(botField);
+            getShotCoordinates(row, col);
+            if (handleShot(plTwoF, row, col)) {
+                playerShipsSunk++;
+            }
+            if (debugOrNot == false)
+            {
+                goToDop(dopField, plTwoF);
+            }
+            playerShots++;
+
+            // ход второго игрока
+            cout << "## pl2 it! ##" << endl;
+
+            Sleep(1000);
+            cout << endl;
+            if (its >= 15)
+            {
+                cout << "you can to search cords (1-yes) (0-wait): ";
+                cin >> razv;
+
+
+            }
+            if (razv == true)
+            {
+                razv = false;
+                its = 0;
+                googleCord(plOneF);
+            }
+
+            printField(dopField);
+            //int row, col;
+            if (debugOrNot == true)
+            {
+                printField(plOneF);
+            }
+
+            //printField(botField);
+            getShotCoordinates(row, col);
+            if (handleShot(plOneF, row, col)) {
+                playerShipsSunk++;
+            }
+            if (debugOrNot == false)
+            {
+                goToDop(dopField, plOneF);
+            }
+            playerShots++;
         }
-        if (debugOrNot==false)
-        {
-            goToDop(dopField, botField);
-        }
-        playerShots++;
-        // Ход бота
-        cout << "## bot it! ##" << endl;
-        int botRow, botCol;
-        getBotShotCoordinates(botRow, botCol);
-        if (handleShot(playerField, botRow, botCol)) {
-            botShipsSunk++;
-        }
-        botShots++;
-        cout << endl;
-        Sleep(1000);
-        printField(playerField);
     }
     // Определение победителя
     if (playerShipsSunk == 16) { 
@@ -470,5 +581,8 @@ int main() {
     else {
         cout << "bot destroy you!" << endl;
     }
+
+ 
+    
     return 0;
 }
