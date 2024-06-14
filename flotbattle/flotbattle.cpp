@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include "Windows.h"
 
 #pragma comment(lib, "winmm.lib")
@@ -9,6 +10,13 @@
 using namespace std;
 
 const int FIELD_SIZE = 10;
+
+
+
+
+
+
+
 
 //SetConsoleOutputCP(866);
 //функция вывода лого
@@ -142,6 +150,9 @@ void placeShip(char field[FIELD_SIZE][FIELD_SIZE], int shipSize, int row, int co
             field[row + i][col] = 'S';
         }
     }
+
+   
+
 }
 void placeShipBot(char field[FIELD_SIZE][FIELD_SIZE], int shipSize, int row, int col, bool isHorizontal) {
     if (isHorizontal) {
@@ -162,6 +173,8 @@ void placeShipBot(char field[FIELD_SIZE][FIELD_SIZE], int shipSize, int row, int
             field[row + i][col] = 'S';
         }
     }
+    
+
 }
 // Функция для получения координат выстрела от игрока
 void getShotCoordinates(int& row, int& col) {
@@ -386,6 +399,10 @@ int main() {
 
 
     // Игра
+    
+    
+
+
     bool debugOrNot;
     char botOrH;
     int playerShots = 0;
@@ -397,7 +414,7 @@ int main() {
     cout << "debug or not(1)(0): ";
     cin >> debugOrNot;
 
-    cout << "game with bot (pve) or with friend (pvp): ";
+    cout << "game with bot (b) or with friend (p): ";
     cin >> botOrH;
     
 
