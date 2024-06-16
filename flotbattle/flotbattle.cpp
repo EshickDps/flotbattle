@@ -64,20 +64,23 @@ void print_ascii_art() {
 }
     
 
+void playStartSnd() {
+    PlaySound(TEXT("kompzvuk.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_NOSTOP);
+}
 void print_ascii_1973() {
     SetConsoleOutputCP(866);
-        cout << "        *        :*-                  :*=        \n"
-        << "      :@@@=     *@@@@@@   @@@@@@@@.  =@@@@@@      \n"
-        << "      =@@@=     @@   @@.  @@   %@+   @@   @@@     \n"
-        << "        @@=    *@@   @@@  @@   @@    @@   @@@     \n"
-        << "        @@=    %@@   @@@      @@          @@%     \n"
-        << "        @@=    =@@   @@@     .@@        @@@%      \n"
-        << "        @@=     @@@@@@@@     @@@        @@@@      \n"
-        << "        @@=       +. @@@     @@@          @@@     \n"
-        << "        @@=          @@@     @@*     ::   @@@     \n"
-        << "        @@=     @@   @@%     @@=     @@   @@@     \n"
-        << "        @@=     @@- :@@     .@@-     @@@  @@@     \n"
-        << "      =@@@@@     @@@@@     +@@@@@     @@@@@@     \n";
+        cout << "                *        :*-                  :*=        \n"
+        << "                  :@@@=     *@@@@@@   @@@@@@@@.  =@@@@@@      \n"
+        << "                  =@@@=     @@   @@.  @@   %@+   @@   @@@     \n"
+        << "                    @@=    *@@   @@@  @@   @@    @@   @@@     \n"
+        << "                    @@=    %@@   @@@      @@          @@%     \n"
+        << "                    @@=    =@@   @@@     .@@        @@@%      \n"
+        << "                    @@=     @@@@@@@@     @@@        @@@@      \n"
+        << "                    @@=       +. @@@     @@@          @@@     \n"
+        << "                    @@=          @@@     @@*     ::   @@@     \n"
+        << "                    @@=     @@   @@%     @@=     @@   @@@     \n"
+        << "                    @@=     @@- :@@     .@@-     @@@  @@@     \n"
+        << "                  =@@@@@     @@@@@     +@@@@@     @@@@@@     \n";
      
     SetConsoleOutputCP(1251);
     
@@ -358,6 +361,8 @@ int main() {
         for (int j = 0; j < FIELD_SIZE; j++) {
             playerField[i][j] = '~';
             botField[i][j] = '~';
+            plOneF[i][j] = '~';
+            plTwoF[i][j] = '~';
         }
     }
     // Размещение кораблей (простейший вариант - случайное размещение)
@@ -404,9 +409,11 @@ int main() {
 
 
     bool debugOrNot;
-    char botOrH;
+    bool botOrH;
     int playerShots = 0;
     int its = 0;
+    int itsFirst = 0;
+    int itsSecond = 0;
     int botShots = 0;
     int playerShipsSunk = 0;
     int botShipsSunk = 0;
@@ -414,22 +421,45 @@ int main() {
     cout << "debug or not(1)(0): ";
     cin >> debugOrNot;
 
+
     cout << "game with bot (b) or with friend (p): ";
     cin >> botOrH;
     
+    playStartSnd();
 
-    if (debugOrNot==false)
+    if (debugOrNot == false)
     {
-        
-        print_ascii_art();
-        Sleep(1000);
-        print_ascii_1973();
-        Sleep(500);
-        loading();
-        Sleep(250);
-        name();
 
-        if (botOrH == 'b') {
+        if (debugOrNot == false)
+        {
+            Sleep(2000);
+        }
+        print_ascii_art();
+        Sleep(1500);
+        print_ascii_1973();
+        Sleep(2000);
+        cout << ".";
+        Sleep(100);
+        cout << ".";
+        Sleep(100);
+        cout << ".";
+        Sleep(100);
+        cout << ".";
+        Sleep(100);
+        cout << ".";
+        Sleep(100);
+        cout << ".";
+        cout << endl;
+
+        loading();
+
+
+        Sleep(250);
+        PlaySound(TEXT("shelk.wav"), NULL, SND_FILENAME | SND_ASYNC);
+        name();
+    }
+
+        if (!botOrH) {
             placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
             placeShip(botField, 2, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
             placeShip(botField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
@@ -440,8 +470,8 @@ int main() {
             placeShip(playerField, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
         }
 
-        if (botOrH=='p')
-        {
+        
+        if (botOrH) {
             placeShip(plOneF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
             placeShip(plOneF, 2, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
             placeShip(plOneF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 2-клеточный корабль
@@ -452,14 +482,14 @@ int main() {
             placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточныйplOneF
         }
 
-    }
+    
     
     if (debugOrNot==true)
     {
         its = 15;
     }
 
-    if (botOrH=='b')
+    if (!botOrH)
     {
         while (playerShipsSunk < 16 && botShipsSunk < 16) {
             // Ход игрока
@@ -514,7 +544,7 @@ int main() {
     }
     
 
-    if (botOrH=='p') {
+    if (botOrH) {
         while (playerShipsSunk < 16 && botShipsSunk < 16) {
             // Ход игрока 1
             cout << "## pl1 it! ##" << endl;
@@ -549,7 +579,7 @@ int main() {
             }
             if (debugOrNot == false)
             {
-                goToDop(dopField, plTwoF);
+                goToDop(dopField, plOneF);
             }
             playerShots++;
 
@@ -586,7 +616,7 @@ int main() {
             }
             if (debugOrNot == false)
             {
-                goToDop(dopField, plOneF);
+                goToDop(dopField, plTwoF);
             }
             playerShots++;
         }
