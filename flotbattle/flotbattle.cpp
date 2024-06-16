@@ -523,7 +523,7 @@ int main() {
 
         cout << "hits to kill you: ";
         cout << playerS;
-        while (playerShipsSunk < 16 && botShipsSunk < 16) {
+        while (playerShipsSunk < playerS  &&  botShipsSunk < botS) {
             // Ход игрока
             cout << "                                                __   _____  _   _ \n";
             cout << "                                                \\ \\ / / _ \\| | | |\n";
@@ -602,7 +602,7 @@ int main() {
 
         cout << "hits to kill second player: ";
         cout << pl2S;
-        while (playerShipsSunk < 16 && botShipsSunk < 16) {
+        while (playerShipsSunk < pl1S && botShipsSunk < pl2S) {
             // Ход игрока 1
             cout << "## pl1 it! ##" << endl;
 
