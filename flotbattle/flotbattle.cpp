@@ -86,6 +86,21 @@ void print_ascii_1973() {
     
 }
 
+int cPlayerShips(char Field[FIELD_SIZE][FIELD_SIZE]) {
+    int counts = 0;
+    for (int i = 0; i < FIELD_SIZE; i++)
+    {
+        for (int j = 0; j < FIELD_SIZE; j++)
+        {
+            if (Field[i][j]=='S')
+            {
+                counts++;
+            }
+        }
+    }
+    return counts;
+}
+
 void loading() {
     for (int i = 0; i < 1; i++)
     {
@@ -196,6 +211,9 @@ bool handleShot(char field[FIELD_SIZE][FIELD_SIZE], int row, int col) {
             cout << "                                         |  _ \\| | | | | | | |\\/| | | |\n";
             cout << "                                         | |_) | |_| | |_| | |  | | |_|\n";
             cout << "                                         |____/ \\___/ \\___/|_|  |_| (_)\n";
+            cout << endl;
+            cout << endl;
+            cout << endl;
 
             PlaySound(TEXT("probit.wav"), NULL, SND_FILENAME | SND_ASYNC);
             return true;
@@ -208,6 +226,10 @@ bool handleShot(char field[FIELD_SIZE][FIELD_SIZE], int row, int col) {
             cout << "                                           | |\\/| || |\\___ \\___ \ \n";
             cout << "                                           | |  | || | ___) |__) |\n";
             cout << "                                           |_|  |_|___|____/____/ \n";
+            cout << endl;
+            cout << endl;
+            cout << endl;
+
             PlaySound(TEXT("ne-probil.wav"), NULL, SND_FILENAME | SND_ASYNC);
    
             return false;
@@ -418,6 +440,7 @@ int main() {
     int playerShipsSunk = 0;
     int botShipsSunk = 0;
     bool razv=false;
+    
     cout << "debug or not(1)(0): ";
     cin >> debugOrNot;
 
@@ -481,6 +504,10 @@ int main() {
             placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточный корабль
             placeShip(plTwoF, 3, rand() % FIELD_SIZE, rand() % FIELD_SIZE, rand() % 2); // 3-клеточныйplOneF
         }
+        int botS = cPlayerShips(botField);
+        int playerS = cPlayerShips(playerField);
+        int pl1S = cPlayerShips(plOneF);
+        int pl2S = cPlayerShips(plTwoF);
 
     
     
@@ -491,9 +518,22 @@ int main() {
 
     if (!botOrH)
     {
+        cout << "hits to kill bot: ";
+        cout << botS;
+
+        cout << "hits to kill you: ";
+        cout << playerS;
         while (playerShipsSunk < 16 && botShipsSunk < 16) {
             // Ход игрока
-            cout << "## you it! ##" << endl;
+            cout << "                                                __   _____  _   _ \n";
+            cout << "                                                \\ \\ / / _ \\| | | |\n";
+            cout << "                                                 \\ V / | | | | | |\n";
+            cout << "                                                  | || |_| | |_| |\n";
+            cout << "                                                  |_| \\___/ \\___/ \n";
+            cout << endl;
+            cout << endl;
+            cout << endl;
+            cout << endl;
             its++;
             Sleep(1000);
             cout << endl;
@@ -529,7 +569,17 @@ int main() {
             }
             playerShots++;
             // Ход бота
-            cout << "## bot it! ##" << endl;
+
+            Sleep(1000);
+            cout << "                                                 ____   ___ _____\n";
+            cout << "                                                | __ ) / _ \\_   _|\n";
+            cout << "                                                |  _ \\| | | || |  \n";
+            cout << "                                                | |_) | |_| || |  \n";
+            cout << "                                                |____/ \\___/ |_| \n";
+            cout << endl;
+            cout << endl;
+            cout << endl;
+            cout << endl;
             int botRow, botCol;
             getBotShotCoordinates(botRow, botCol);
             if (handleShot(playerField, botRow, botCol)) {
@@ -545,6 +595,13 @@ int main() {
     
 
     if (botOrH) {
+
+        cout << "hits to kill first player: ";
+        cout << pl1S;
+        cout << endl;
+
+        cout << "hits to kill second player: ";
+        cout << pl2S;
         while (playerShipsSunk < 16 && botShipsSunk < 16) {
             // Ход игрока 1
             cout << "## pl1 it! ##" << endl;
