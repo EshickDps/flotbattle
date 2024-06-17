@@ -12,6 +12,7 @@ using namespace std;
 
 const int FIELD_SIZE = 10;
 
+char path[9]{ 's','t', 'a', 't', 's', '.', 't', 'x', 't'};
 
 
 
@@ -145,6 +146,8 @@ void printField(char field[FIELD_SIZE][FIELD_SIZE]) {
         cout << endl;
     }
 }
+
+
 
 // Функция для проверки, является ли клетка допустимой для размещения корабля
 bool isValidCell(char field[FIELD_SIZE][FIELD_SIZE], int row, int col) {
