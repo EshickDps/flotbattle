@@ -7,6 +7,7 @@
 
 #pragma comment(lib, "winmm.lib")
 
+
 using namespace std;
 
 const int FIELD_SIZE = 10;
@@ -63,6 +64,7 @@ void print_ascii_art() {
         << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
 }
     
+
 
 void playStartSnd() {
     PlaySound(TEXT("kompzvuk.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_NOSTOP);
@@ -195,10 +197,20 @@ void placeShipBot(char field[FIELD_SIZE][FIELD_SIZE], int shipSize, int row, int
 
 }
 // Функция для получения координат выстрела от игрока
-void getShotCoordinates(int& row, int& col) {
+void getShotCoordinates(int& row, int& col, bool bot) {
     cout << "input cord (row, col): ";
     cin >> row >> col;
-    PlaySound(TEXT("vistrel.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
+    if (!bot)
+    {
+        PlaySound(TEXT("vistrel.wav"), NULL, SND_FILENAME | SND_ASYNC);
+        Sleep(200);
+    }
+
+    if (bot) {
+        PlaySound(TEXT("botvistrel.wav"), NULL, SND_FILENAME | SND_ASYNC);
+        Sleep(200);
+    }
 }
 // Функция для обработки выстрела
 int missCount = 0;
@@ -214,8 +226,10 @@ bool handleShot(char field[FIELD_SIZE][FIELD_SIZE], int row, int col) {
             cout << endl;
             cout << endl;
             cout << endl;
+            Sleep(900);
 
             PlaySound(TEXT("probit.wav"), NULL, SND_FILENAME | SND_ASYNC);
+            
             return true;
         }
         else {
@@ -229,6 +243,7 @@ bool handleShot(char field[FIELD_SIZE][FIELD_SIZE], int row, int col) {
             cout << endl;
             cout << endl;
             cout << endl;
+            Sleep(900);
 
             PlaySound(TEXT("ne-probil.wav"), NULL, SND_FILENAME | SND_ASYNC);
    
@@ -356,6 +371,11 @@ void goToDop(char dopField[FIELD_SIZE][FIELD_SIZE], char botField[FIELD_SIZE][FI
 void getBotShotCoordinates(int& row, int& col) {
     row = rand() % FIELD_SIZE;
     col = rand() % FIELD_SIZE;
+
+    Sleep(300);
+    PlaySound(TEXT("botvistrel.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    Sleep(300);
+    
 }
 
 int main() {
@@ -445,7 +465,7 @@ int main() {
     cin >> debugOrNot;
 
 
-    cout << "game with bot (b) or with friend (p): ";
+    cout << "game with bot (0) or with friend (1): ";
     cin >> botOrH;
     
     playStartSnd();
@@ -477,7 +497,7 @@ int main() {
         loading();
 
 
-        Sleep(250);
+        Sleep(550);
         PlaySound(TEXT("shelk.wav"), NULL, SND_FILENAME | SND_ASYNC);
         name();
     }
@@ -520,9 +540,11 @@ int main() {
     {
         cout << "hits to kill bot: ";
         cout << botS;
+        cout << endl;
 
         cout << "hits to kill you: ";
         cout << playerS;
+        cout << endl;
         while (playerShipsSunk < playerS  &&  botShipsSunk < botS) {
             // Ход игрока
             cout << "                                                __   _____  _   _ \n";
@@ -559,7 +581,7 @@ int main() {
             }
 
             //printField(botField);
-            getShotCoordinates(row, col);
+            getShotCoordinates(row, col, false);
             if (handleShot(botField, row, col)) {
                 playerShipsSunk++;
             }
@@ -599,9 +621,13 @@ int main() {
         cout << "hits to kill first player: ";
         cout << pl1S;
         cout << endl;
+        cout << endl;
 
         cout << "hits to kill second player: ";
         cout << pl2S;
+
+        cout << endl;
+
         while (playerShipsSunk < pl1S && botShipsSunk < pl2S) {
             // Ход игрока 1
             cout << "## pl1 it! ##" << endl;
@@ -630,7 +656,7 @@ int main() {
             }
 
             //printField(botField);
-            getShotCoordinates(row, col);
+            getShotCoordinates(row, col, true);
             if (handleShot(plTwoF, row, col)) {
                 playerShipsSunk++;
             }
@@ -667,7 +693,7 @@ int main() {
             }
 
             //printField(botField);
-            getShotCoordinates(row, col);
+            getShotCoordinates(row, col, false);
             if (handleShot(plOneF, row, col)) {
                 playerShipsSunk++;
             }
