@@ -406,8 +406,8 @@ void getBotShotCoordinates(int& row, int& col) {
 int main() {
 
     FILE* file;
-    fopen_s(&file, "f.dat", "w+");
-    int val;
+    fopen_s(&file, "f.txt", "rb+");
+    int val = 0;
     if (file) {
         fread(&val, sizeof val, 1, file);
         ++val;
