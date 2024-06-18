@@ -4,6 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include "Windows.h"
+#include <cstdio>
 
 #pragma comment(lib, "winmm.lib")
 
@@ -12,7 +13,7 @@ using namespace std;
 
 const int FIELD_SIZE = 10;
 
-char path[9]{ 's','t', 'a', 't', 's', '.', 't', 'x', 't'};
+
 
 
 
@@ -88,6 +89,27 @@ void print_ascii_1973() {
     SetConsoleOutputCP(1251);
     
 }
+
+
+
+
+
+void WriteSt(FILE* file) {
+    int val;
+    if (file)
+    {
+        fread(&val, sizeof val, 1, file);
+        ++val;
+        fseek(file, 0, SEEK_SET);
+        fwrite(&val, sizeof val, 1, file);
+        fclose(file);
+        cout << "Starts: " << val << endl;
+           
+
+
+    }
+}
+
 
 int cPlayerShips(char Field[FIELD_SIZE][FIELD_SIZE]) {
     int counts = 0;
@@ -382,7 +404,20 @@ void getBotShotCoordinates(int& row, int& col) {
 }
 
 int main() {
-    
+
+    FILE* file;
+    fopen_s(&file, "f.dat", "w+");
+    int val;
+    if (file) {
+        fread(&val, sizeof val, 1, file);
+        ++val;
+        fseek(file, 0, SEEK_SET);
+        fwrite(&val, sizeof val, 1, file);
+        fclose(file);
+        cout << "Start: " << val << endl;
+    }
+
+
     
 
     for (int i = 0; i <= 1; i++)
