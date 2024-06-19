@@ -71,6 +71,9 @@ void print_ascii_art() {
 void playStartSnd() {
     PlaySound(TEXT("kompzvuk.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_NOSTOP);
 }
+
+
+
 void print_ascii_1973() {
     SetConsoleOutputCP(866);
         cout << "                *        :*-                  :*=        \n"
@@ -113,9 +116,32 @@ void WriteSt(FILE* file) {
 void secretMusicBox() {
     int a;
     cout << "YOU UNLOCKED SECRET MUSIC BOX!!!\n";
-    cout << "1.Pizza Time !\n";
+    cout << "1.Germani song\n";
     cout << "2.USSR ANTERN\n";
-    cout << "3.START BSOD\n";
+    cout << "input: ";
+    cin >> a;
+    switch (a)
+    {
+    case 1:
+        PlaySound(TEXT("gimn2.wav"), NULL, SND_FILENAME | SND_ASYNC);
+        break;
+    case 2:
+        PlaySound(TEXT("gimn1.wav"), NULL, SND_FILENAME | SND_ASYNC);
+        break;
+
+                
+    
+    default:
+        break;
+    }
+    cout << "input (1) to stop: ";
+    cin >> a;
+
+    if (a==1)
+    {
+        PlaySound(TEXT("shelk.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    }
+
 }
 
 
@@ -412,7 +438,7 @@ void getBotShotCoordinates(int& row, int& col) {
 }
 
 int main() {
-   
+    
 
     FILE* file;
     fopen_s(&file, "f.txt", "rb+");
@@ -497,7 +523,7 @@ int main() {
     
 
 
-    bool debugOrNot;
+    int debugOrNot;
     bool botOrH;
     int playerShots = 0;
     int its = 0;
@@ -510,6 +536,12 @@ int main() {
     
     cout << "debug or not(1)(0): ";
     cin >> debugOrNot;
+    if (debugOrNot!= 1 and debugOrNot !=0)
+    {
+        secretMusicBox();
+        cout << "debug Or Not: ";
+        cin >> debugOrNot;
+    }
 
 
     cout << "game with bot (0) or with friend (1): ";
@@ -517,10 +549,10 @@ int main() {
     
     playStartSnd();
 
-    if (debugOrNot == false)
+    if (debugOrNot == 0)
     {
 
-        if (debugOrNot == false)
+        if (debugOrNot == 0)
         {
             Sleep(2000);
         }
@@ -578,7 +610,7 @@ int main() {
 
     
     
-    if (debugOrNot==true)
+    if (debugOrNot==1)
     {
         its = 15;
     }
@@ -622,7 +654,7 @@ int main() {
 
             printField(dopField);
             int row, col;
-            if (debugOrNot == true)
+            if (debugOrNot == 1)
             {
                 printField(botField);
             }
@@ -632,7 +664,7 @@ int main() {
             if (handleShot(botField, row, col)) {
                 playerShipsSunk++;
             }
-            if (debugOrNot == false)
+            if (debugOrNot == 0)
             {
                 goToDop(dopField, botField);
             }
@@ -677,7 +709,11 @@ int main() {
 
         while (playerShipsSunk < pl1S && botShipsSunk < pl2S) {
             // Ход игрока 1
-            cout << "## pl1 it! ##" << endl;
+            cout << "  ____  _        _ __   _______ ____     ___  _   _ _____ \n";
+            cout << " |  _ \\| |      / \\\\ \\ / / ____|  _ \\   / _ \\| \\ | | ____|\n";
+            cout << " | |_) | |     / _ \\\\ V /|  _| | |_) | | | | |  \\| |  _|  \n";
+            cout << " |  __/| |___ / ___ \\| | | |___|  _ <  | |_| | |\\  | |___ \n";
+            cout << " |_|   |_____/_/   \\_\\_| |_____|_| \\_\\  \\___/|_| \\_|_____|\n";
 
             Sleep(1000);
             cout << endl;
@@ -697,7 +733,7 @@ int main() {
 
             printField(dopField);
             int row, col;
-            if (debugOrNot == true)
+            if (debugOrNot == 1)
             {
                 printField(plTwoF);
             }
@@ -707,14 +743,18 @@ int main() {
             if (handleShot(plTwoF, row, col)) {
                 playerShipsSunk++;
             }
-            if (debugOrNot == false)
+            if (debugOrNot == 0)
             {
                 goToDop(dopField, plOneF);
             }
             playerShots++;
 
             // ход второго игрока
-            cout << "## pl2 it! ##" << endl;
+            cout << "  ____  _        _ __   _______ ____    _______        _____  \n";
+            cout << " |  _ \\| |      / \\\\ \\ / / ____|  _ \\  |_   _\\ \\      / / _ \\ \n";
+            cout << " | |_) | |     / _ \\\\ V /|  _| | |_) |   | |  \\ \\ /\\ / / | | |\n";
+            cout << " |  __/| |___ / ___ \\| | | |___|  _ <    | |   \\ V  V /| |_| |\n";
+            cout << " |_|   |_____/_/   \\_\\_| |_____|_| \\_\\   |_|    \\_/\\_/  \\___/ \n";
 
             Sleep(1000);
             cout << endl;
@@ -744,7 +784,7 @@ int main() {
             if (handleShot(plOneF, row, col)) {
                 botShipsSunk;
             }
-            if (debugOrNot == false)
+            if (debugOrNot == 0)
             {
                 goToDop(dopField, plTwoF);
             }
@@ -761,7 +801,7 @@ int main() {
             cout << "                                                  \\ V / | | | | | |  \\ \\ /\\ / / | ||  \\| | | |\n";
             cout << "                                                   | || |_| | |_| |   \\ V  V /  | || |\\  | |_|\n";
             cout << "                                                   |_| \\___/ \\___/     \\_/\\_/  |___|_| \\_| (_)\n";
-            PlaySound(TEXT("gimn1"), NULL, SND_FILENAME | SND_ASYNC);
+            PlaySound(TEXT("gimn1.wav"), NULL, SND_FILENAME | SND_ASYNC);
         }
         else {
             cout << "                                                  ____   ___ _____  __        _____ _   _      __\n";
@@ -771,7 +811,7 @@ int main() {
             cout << "                                                 |____/ \\___/ |_|      \\_/\\_/  |___|_| \\_| (_) | \n";
             cout << "                                                                                              \\_\\ \n";
         }
-        PlaySound(TEXT("gimn2"), NULL, SND_FILENAME | SND_ASYNC);
+        PlaySound(TEXT("gimn2.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 
     if (botOrH)
@@ -784,7 +824,7 @@ int main() {
             cout << "                                                 |  __/| |___ / ___ \\| | | |___|  _ <   | |_| | |\\  | |___    \\ V  V /  | || |\\  |_|\n";
             cout << "                                                 |_|   |_____/_/   \\_\\_| |_____|_| \\_\\   \\___/|_| \\_|_____|    \\_/\\_/  |___|_| \\_(_)\n";
 
-            PlaySound(TEXT("gimn1"), NULL, SND_FILENAME | SND_ASYNC);
+            PlaySound(TEXT("gimn1.wav"), NULL, SND_FILENAME | SND_ASYNC);
         }
         else if(botShipsSunk==pl1S){
             cout << "                                                  ____  _        _ __   _______ ____     _______        _____   __        _____ _   _ _ \n";
@@ -792,7 +832,7 @@ int main() {
             cout << "                                                 | |_) | |     / _ \\\\ V /|  _| | |_) |    | |  \\ \\ /\\ / / | | |  \\ \\ /\\ / / | ||  \\| | |\n";
             cout << "                                                 |  __/| |___ / ___ \\| | | |___|  _ <     | |   \\ V  V /| |_| |   \\ V  V /  | || |\\  |_|\n";
             cout << "                                                 |_|   |_____/_/   \\_\\_| |_____|_| \\_\\    |_|    \\_/\\_/  \\___/     \\_/\\_/  |___|_| \\_(_)\n";
-            PlaySound(TEXT("gimn2"), NULL, SND_FILENAME | SND_ASYNC);
+            PlaySound(TEXT("gimn2.wav"), NULL, SND_FILENAME | SND_ASYNC);
         }
     }
    
