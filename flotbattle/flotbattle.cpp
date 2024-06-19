@@ -110,6 +110,14 @@ void WriteSt(FILE* file) {
     }
 }
 
+void secretMusicBox() {
+    int a;
+    cout << "YOU UNLOCKED SECRET MUSIC BOX!!!\n";
+    cout << "1.Pizza Time !\n";
+    cout << "2.USSR ANTERN\n";
+    cout << "3.START BSOD\n";
+}
+
 
 int cPlayerShips(char Field[FIELD_SIZE][FIELD_SIZE]) {
     int counts = 0;
@@ -404,6 +412,7 @@ void getBotShotCoordinates(int& row, int& col) {
 }
 
 int main() {
+   
 
     FILE* file;
     fopen_s(&file, "f.txt", "rb+");
@@ -733,7 +742,7 @@ int main() {
             //printField(botField);
             getShotCoordinates(row, col, false);
             if (handleShot(plOneF, row, col)) {
-                playerShipsSunk++;
+                botShipsSunk;
             }
             if (debugOrNot == false)
             {
@@ -742,13 +751,51 @@ int main() {
             playerShots++;
         }
     }
-    // Определение победителя
-    if (playerShipsSunk == 16) { 
-        cout << "enemy is destroed!" << endl;
+
+    if (!botOrH)
+    {
+        // Определение победителя
+        if (playerShipsSunk == playerS) {
+            cout << "                                                  __   _____  _   _  __        _____ _   _   _ \n";
+            cout << "                                                 \\ \\ / / _ \\| | | | \\ \\      / /_ _| \\ | | | |\n";
+            cout << "                                                  \\ V / | | | | | |  \\ \\ /\\ / / | ||  \\| | | |\n";
+            cout << "                                                   | || |_| | |_| |   \\ V  V /  | || |\\  | |_|\n";
+            cout << "                                                   |_| \\___/ \\___/     \\_/\\_/  |___|_| \\_| (_)\n";
+            PlaySound(TEXT("gimn1"), NULL, SND_FILENAME | SND_ASYNC);
+        }
+        else {
+            cout << "                                                  ____   ___ _____  __        _____ _   _      __\n";
+            cout << "                                                 | __ ) / _ \\_   _| \\ \\      / /_ _| \\ | |  _ / /\n";
+            cout << "                                                 |  _ \\| | | || |    \\ \\ /\\ / / | ||  \\| | (_) | \n";
+            cout << "                                                 | |_) | |_| || |     \\ V  V /  | || |\\  |  _| | \n";
+            cout << "                                                 |____/ \\___/ |_|      \\_/\\_/  |___|_| \\_| (_) | \n";
+            cout << "                                                                                              \\_\\ \n";
+        }
+        PlaySound(TEXT("gimn2"), NULL, SND_FILENAME | SND_ASYNC);
     }
-    else {
-        cout << "bot destroy you!" << endl;
+
+    if (botOrH)
+    {
+        // Определение победителя
+        if (playerShipsSunk == pl2S) {
+            cout << "                                                  ____  _        _ __   _______ ____      ___  _   _ _____  __        _____ _   _ _ \n";
+            cout << "                                                 |  _ \\| |      / \\\\ \\ / / ____|  _ \\    / _ \\| \\ | | ____| \\ \\      / /_ _| \\ | | |\n";
+            cout << "                                                 | |_) | |     / _ \\\\ V /|  _| | |_) |  | | | |  \\| |  _|    \\ \\ /\\ / / | ||  \\| | |\n";
+            cout << "                                                 |  __/| |___ / ___ \\| | | |___|  _ <   | |_| | |\\  | |___    \\ V  V /  | || |\\  |_|\n";
+            cout << "                                                 |_|   |_____/_/   \\_\\_| |_____|_| \\_\\   \\___/|_| \\_|_____|    \\_/\\_/  |___|_| \\_(_)\n";
+
+            PlaySound(TEXT("gimn1"), NULL, SND_FILENAME | SND_ASYNC);
+        }
+        else if(botShipsSunk==pl1S){
+            cout << "                                                  ____  _        _ __   _______ ____     _______        _____   __        _____ _   _ _ \n";
+            cout << "                                                 |  _ \\| |      / \\\\ \\ / / ____|  _ \\   |_   _\\ \\      / / _ \\  \\ \\      / /_ _| \\ | | |\n";
+            cout << "                                                 | |_) | |     / _ \\\\ V /|  _| | |_) |    | |  \\ \\ /\\ / / | | |  \\ \\ /\\ / / | ||  \\| | |\n";
+            cout << "                                                 |  __/| |___ / ___ \\| | | |___|  _ <     | |   \\ V  V /| |_| |   \\ V  V /  | || |\\  |_|\n";
+            cout << "                                                 |_|   |_____/_/   \\_\\_| |_____|_| \\_\\    |_|    \\_/\\_/  \\___/     \\_/\\_/  |___|_| \\_(_)\n";
+            PlaySound(TEXT("gimn2"), NULL, SND_FILENAME | SND_ASYNC);
+        }
     }
+   
 
  
     
