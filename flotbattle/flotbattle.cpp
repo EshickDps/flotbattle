@@ -2,7 +2,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
-#include <fstream>
 #include "Windows.h"
 #include <cstdio>
 
